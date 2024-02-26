@@ -15,7 +15,8 @@ export default class App extends Component {
     filter: 'all',
   }
 
-  createTodoItem(label) {
+  createTodoItem(label, min, sec) {
+    console.log(min)
     return {
       label,
       done: false,
@@ -24,6 +25,8 @@ export default class App extends Component {
       editing: false,
       id: this.maxId++,
       createItemTime: new Date(),
+      min,
+      sec,
     }
   }
 
@@ -39,8 +42,8 @@ export default class App extends Component {
     })
   }
 
-  addItem = (text) => {
-    let newItem = this.createTodoItem(text)
+  addItem = (text, min, sec) => {
+    let newItem = this.createTodoItem(text, min, sec)
     let timeAdd = newItem.createItemTime
 
     this.setState(({ todoData }) => {
