@@ -6,7 +6,6 @@ const TaskList = ({ todos, onDeleted, onToggleDone, onEditItem, oneditLabelItem,
   let elements = todos.map((item) => {
     let classNameS = ''
     const { id, done, edit, ...itemProps } = item
-
     if (done) {
       classNameS += 'completed'
     }
@@ -23,6 +22,7 @@ const TaskList = ({ todos, onDeleted, onToggleDone, onEditItem, oneditLabelItem,
           onEditItem={() => onEditItem(id)}
           oneditLabelItem={() => oneditLabelItem(id)}
           onAddItem={() => onAddItem()}
+          done={done}
         />
       </li>
     )
