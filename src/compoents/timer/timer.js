@@ -1,58 +1,41 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 
-export default class Timer extends Component {
-  state = {
-    minutes: this.props.minutes,
-    seconds: this.props.seconds,
-    isPause: false,
-  }
-  componentDidMount() {
-    this.interval = setInterval(() => {
-      if (!this.state.isPause && !this.props.done) {
-        if (this.state.seconds > 0) {
-          this.setState(({ seconds }) => {
-            return {
-              seconds: seconds - 1,
-            }
-          })
-        } else if (this.state.minutes > 0) {
-          this.setState(({ minutes }) => {
-            return {
-              minutes: minutes - 1,
-              seconds: 59,
-            }
-          })
+const Timer = ({ minutes, seconds, done }) => {
+  const [min, setMinutes] = useState(minutes)
+  const [sec, setSeconds] = useState(seconds)
+  const [isPause, setIsPause] = useState(false)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!isPause && !done) {
+        if (sec > 0) {
+          setSeconds((s) => (s >= 1 ? s - 1 : 0))
+        } else if (min > 0) {
+          setMinutes((m) => (m >= 1 ? m - 1 : 0))
+          setSeconds(59)
         }
       }
     }, 1000)
-  }
-  componentWillUnmount() {
-    return clearInterval(this.interval)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [min, sec, isPause, done])
+
+  const startTimer = () => {
+    setIsPause(false)
   }
 
-  startTimer = () => {
-    this.setState(() => {
-      return {
-        isPause: false,
-      }
-    })
+  const pauseTimer = () => {
+    setIsPause(true)
   }
 
-  pauseTimer = () => {
-    this.setState(() => {
-      return {
-        isPause: true,
-      }
-    })
-  }
-
-  render() {
-    return (
-      <div>
-        <button className="icon icon-play" onClick={this.startTimer}></button>
-        <button className="icon icon-pause" onClick={this.pauseTimer}></button>
-        {`${this.state.minutes.toString().padStart(2, '0')}:${this.state.seconds.toString().padStart(2, '0')}`}
-      </div>
-    )
-  }
+  return (
+    <div>
+      <button className="icon icon-play" onClick={startTimer}></button>
+      <button className="icon icon-pause" onClick={pauseTimer}></button>
+      {`${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`}
+    </div>
+  )
 }
+
+export default Timer

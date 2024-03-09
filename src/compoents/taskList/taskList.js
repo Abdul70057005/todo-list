@@ -5,7 +5,7 @@ import Task from '../task'
 const TaskList = ({ todos, onDeleted, onToggleDone, onEditItem, oneditLabelItem, filter, onAddItem }) => {
   let elements = todos.map((item) => {
     let classNameS = ''
-    const { id, done, edit, ...itemProps } = item
+    const { id, done, edit, label, min, sec, ...itemProps } = item
     if (done) {
       classNameS += 'completed'
     }
@@ -23,6 +23,9 @@ const TaskList = ({ todos, onDeleted, onToggleDone, onEditItem, oneditLabelItem,
           oneditLabelItem={() => oneditLabelItem(id)}
           onAddItem={() => onAddItem()}
           done={done}
+          label={label}
+          min={min}
+          sec={sec}
         />
       </li>
     )
