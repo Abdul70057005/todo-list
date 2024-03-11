@@ -24,6 +24,9 @@ const Task = ({
 
   const onSubmit = (e) => {
     e.preventDefault()
+    if (labell === '' || minutes === '' || seconds === '') {
+      return
+    }
     oneditLabelItem(labell)
   }
 

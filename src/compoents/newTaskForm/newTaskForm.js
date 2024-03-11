@@ -7,6 +7,9 @@ const NewTaskForm = ({ onItemAdded }) => {
 
   const onSubmit = (e) => {
     e.preventDefault()
+    if (label === '' || minutes === '' || seconds === '') {
+      return
+    }
     onItemAdded(label, minutes, seconds)
     setLabel('')
     setMinutes('')
